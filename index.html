@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Santa pour Émeline</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #1a472a, #0a2b18);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Animation de neige */
+        .snow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Style du titre */
+        h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+            z-index: 1;
+        }
+
+        .recipient {
+            color: #d42426;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Le cadeau cliquable */
+        #gift-box {
+            font-size: 100px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 1;
+            user-select: none;
+        }
+
+        #gift-box:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Message de révélation caché au début */
+        #reveal-section {
+            display: none;
+            animation: fadeIn 1.5s ease-in-out;
+            z-index: 1;
+        }
+
+        .buche-img {
+            font-size: 80px;
+            margin-top: 20px;
+        }
+
+        .shop-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #d42426;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .shop-link:hover {
+            background-color: #b31e20;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="snow-container" id="snow"></div>
+
+    <h1>Joyeux Secret Santa, <span class="recipient">Émeline</span> ! 🎅</h1>
+    <p style="z-index: 1;">Quelqu'un a déposé un message pour toi... Clique sur le cadeau pour l'ouvrir !</p>
+
+    <div id="gift-box">🎁</div>
+
+    <div id="reveal-section">
+        <h2>Ta surprise gourmande :</h2>
+        <div class="buche-img">🪵🍰</div>
+        <p style="font-size: 1.2rem;">Une délicieuse <strong>Bûche de Noël</strong> de chez <strong>L'édème</strong> !</p>
+        <p>Prépare tes papilles pour une explosion de saveurs artisanales.</p>
+        <a href="https://www.ledeme.fr" target="_blank" class="shop-link">Découvrir la pâtisserie</a>
+    </div>
+
+    <script>
+        // Animation du cadeau
+        const gift = document.getElementById('gift-box');
+        const reveal = document.getElementById('reveal-section');
+
+        gift.addEventListener('click', () => {
+            gift.style.display = 'none';
+            reveal.style.display = 'block';
+            confettiEffect();
+        });
+
+        // Génération de la neige
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.innerHTML = '❄';
+            snowflake.style.position = 'absolute';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
+            snowflake.style.color = 'white';
+            snowflake.style.top = '-20px';
+            snowflake.style.animationName = 'fall';
+            snowflake.style.animationTimingFunction = 'linear';
+            
+            document.getElementById('snow').appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 150);
+
+        function confettiEffect() {
+            // Un petit effet simple pour marquer le coup
+            document.body.style.backgroundColor = '#1e5d35';
+        }
+    </script>
+</body>
+</html>
